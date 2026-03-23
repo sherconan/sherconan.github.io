@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sherconan - AI Developer Portfolio</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0b0d17;--surface:#12152a;--border:rgba(255,255,255,.06);
+  --text:#e0e0e8;--muted:#6b7294;--accent:#7c6cf0;--accent2:#f06292;
+  --gold:#d4a853;--green:#4caf8a;--blue:#4fa8f5;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes gradientFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  min-height:100vh;overflow-x:hidden;
+}
+
+/* Starfield */
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.star{position:absolute;border-radius:50%;background:#fff;animation:pulse 3s ease-in-out infinite}
+
+/* Header */
+header{
+  position:relative;z-index:1;text-align:center;
+  padding:80px 20px 50px;
+}
+.avatar{
+  width:100px;height:100px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 24px;font-size:2.5rem;
+  box-shadow:0 0 40px rgba(124,108,240,.3);
+}
+header h1{
+  font-size:clamp(2rem,5vw,3.5rem);font-weight:800;
+  background:linear-gradient(135deg,#7c6cf0,#f06292,#4fa8f5,#d4a853,#7c6cf0);
+  background-size:300% 300%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:gradientFlow 8s ease infinite;
+  letter-spacing:-0.5px;
+}
+header .tagline{
+  margin-top:12px;font-size:1.1rem;color:var(--muted);
+  max-width:600px;margin-left:auto;margin-right:auto;line-height:1.7;
+}
+.stats{
+  display:flex;justify-content:center;gap:48px;margin-top:32px;flex-wrap:wrap;
+}
+.stat-num{font-size:2.2rem;font-weight:700;color:var(--accent)}
+.stat-label{font-size:.8rem;color:var(--muted);margin-top:4px;letter-spacing:1px;text-transform:uppercase}
+
+/* Filter */
+.filter-bar{
+  position:relative;z-index:1;
+  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
+  max-width:900px;margin:40px auto 0;padding:0 20px;
+}
+.filter-btn{
+  padding:8px 20px;border-radius:20px;border:1px solid var(--border);
+  background:transparent;color:var(--muted);cursor:pointer;
+  font-size:.85rem;transition:all .3s ease;font-family:inherit;
+}
+.filter-btn:hover,.filter-btn.active{
+  background:var(--accent);color:#fff;border-color:var(--accent);
+}
+
+/* Grid */
+.grid{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  gap:24px;max-width:1200px;margin:36px auto;padding:0 24px 40px;
+}
+.card{
+  background:linear-gradient(145deg,rgba(18,21,42,.9),rgba(11,13,23,.95));
+  border:1px solid var(--border);border-radius:16px;
+  padding:28px;text-decoration:none;color:inherit;
+  transition:all .4s cubic-bezier(.25,.8,.25,1);
+  animation:fadeUp .6s ease both;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--card-gradient);border-radius:16px 16px 0 0;
+  transition:height .3s ease;
+}
+.card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(255,255,255,.12);
+  box-shadow:0 16px 48px rgba(0,0,0,.4),0 0 30px rgba(124,108,240,.08);
+}
+.card:hover::before{height:4px}
+.card-icon{font-size:2rem;margin-bottom:12px;animation:float 4s ease-in-out infinite}
+.card-title{font-size:1.15rem;font-weight:700;margin-bottom:8px}
+.card-desc{font-size:.88rem;color:var(--muted);line-height:1.6;flex:1}
+.card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.tag{
+  font-size:.7rem;padding:3px 10px;border-radius:12px;
+  background:rgba(124,108,240,.12);color:var(--accent);
+  letter-spacing:.5px;
+}
+.tag.green{background:rgba(76,175,138,.12);color:var(--green)}
+.tag.gold{background:rgba(212,168,83,.12);color:var(--gold)}
+.tag.blue{background:rgba(79,168,245,.12);color:var(--blue)}
+.tag.pink{background:rgba(240,98,146,.12);color:var(--accent2)}
+.card-links{
+  display:flex;gap:12px;margin-top:14px;
+}
+.card-link{
+  font-size:.78rem;color:var(--accent);text-decoration:none;
+  display:flex;align-items:center;gap:4px;transition:color .2s;
+}
+.card-link:hover{color:#fff}
+
+/* Section headers */
+.section-title{
+  position:relative;z-index:1;
+  max-width:1200px;margin:48px auto 0;padding:0 24px;
+  font-size:1.3rem;font-weight:700;color:var(--text);
+  display:flex;align-items:center;gap:12px;
+}
+.section-title::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,var(--border),transparent);
+}
+
+/* Footer */
+footer{
+  position:relative;z-index:1;
+  text-align:center;padding:48px 20px;
+  color:var(--muted);font-size:.85rem;
+}
+footer a{color:var(--accent);text-decoration:none}
+footer a:hover{color:#fff}
+
+/* Responsive */
+@media(max-width:720px){
+  .grid{grid-template-columns:1fr}
+  .stats{gap:28px}
+  header{padding:50px 16px 30px}
+}
+
+/* Hide filtered */
+.card.hidden{display:none}
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<header>
+  <div class="avatar">S</div>
+  <h1>Sherconan</h1>
+  <p class="tagline">AI Developer &amp; Builder — 构建 AI 驱动的金融分析、知识管理和自动化工具</p>
+  <div class="stats">
+    <div><div class="stat-num">10+</div><div class="stat-label">Projects</div></div>
+    <div><div class="stat-num">155+</div><div class="stat-label">AI Articles</div></div>
+    <div><div class="stat-num">28+</div><div class="stat-label">AI Skills</div></div>
+  </div>
+</header>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">全部</button>
+  <button class="filter-btn" data-filter="finance">金融/交易</button>
+  <button class="filter-btn" data-filter="knowledge">知识/研究</button>
+  <button class="filter-btn" data-filter="tools">工具/自动化</button>
+  <button class="filter-btn" data-filter="scraper">数据采集</button>
+  <button class="filter-btn" data-filter="demo">互动Demo</button>
+</div>
+
+<!-- Finance & Trading -->
+<h2 class="section-title" data-section="finance">金融 &amp; 交易</h2>
+<div class="grid" data-section="finance">
+
+  <a class="card" data-cat="finance" href="https://github.com/sherconan/stock-pulse" target="_blank" style="--card-gradient:linear-gradient(90deg,#910E0E,#be8c4b)">
+    <div class="card-icon">📈</div>
+    <div class="card-title">StockPulse</div>
+    <div class="card-desc">事件驱动的市场解析平台。大事件 → 传导链 → 行业影响 → 个股波动。实时/晨报/预测三种模式，AI 聚类新闻为大事件。</div>
+    <div class="card-tags">
+      <span class="tag gold">Flask</span><span class="tag gold">SocketIO</span><span class="tag">Claude API</span><span class="tag blue">yfinance</span>
+    </div>
+  </a>
+
+  <a class="card" data-cat="finance" href="https://github.com/sherconan/TradingAgents" target="_blank" style="--card-gradient:linear-gradient(90deg,#43e97b,#38f9d7)">
+    <div class="card-icon">🤖</div>
+    <div class="card-title">TradingAgents</div>
+    <div class="card-desc">多智能体 LLM 金融交易框架。基于 LangGraph 构建，包含基本面分析师、新闻分析师、风控辩论等多角色协作决策。</div>
+    <div class="card-tags">
+      <span class="tag green">LangGraph</span><span class="tag green">Multi-Agent</span><span class="tag blue">Alpha Vantage</span>
+    </div>
+  </a>
+
+  <a class="card" data-cat="finance" style="--card-gradient:linear-gradient(90deg,#4facfe,#00f2fe)">
+    <div class="card-icon">📊</div>
+    <div class="card-title">Futu 量化交易</div>
+    <div class="card-desc">基于富途 OpenAPI 的量化交易系统。覆盖港股、美股、A股，计划与 StockPulse 集成实现事件驱动交易信号。</div>
+    <div class="card-tags">
+      <span class="tag blue">Futu OpenAPI</span><span class="tag blue">moomoo SDK</span><span class="tag">量化交易</span>
+    </div>
+  </a>
+
+</div>
+
+<!-- Knowledge & Research -->
+<h2 class="section-title" data-section="knowledge">知识 &amp; 研究</h2>
+<div class="grid" data-section="knowledge">
+
+  <a class="card" data-cat="knowledge" href="https://sherconan.github.io/ai-frontiers-cn/" target="_blank" style="--card-gradient:linear-gradient(90deg,#667eea,#764ba2)">
+    <div class="card-icon">📚</div>
+    <div class="card-title">AI 前沿精读</div>
+    <div class="card-desc">全球 AI 实验室博客的中文翻译与深度解读。155+ 篇文章，覆盖 Anthropic、OpenAI、DeepMind 等 14 家公司，双层解读体系。</div>
+    <div class="card-tags">
+      <span class="tag">VitePress</span><span class="tag">Mermaid</span><span class="tag pink">155+ 文章</span><span class="tag">GitHub Pages</span>
+    </div>
+    <div class="card-links">
+      <span class="card-link">🌐 在线阅读</span>
+      <span class="card-link">📦 GitHub</span>
+    </div>
+  </a>
+
+  <a class="card" data-cat="knowledge" href="https://github.com/sherconan/weekly-report-toolkit" target="_blank" style="--card-gradient:linear-gradient(90deg,#f093fb,#f5576c)">
+    <div class="card-icon">📋</div>
+    <div class="card-title">行业周报工具包</div>
+    <div class="card-desc">一键生成行业周报：数据采集 → 报告构建 → 质量评估 → HTML/PDF 导出。已用于床垫、AI、宠物医疗等行业。</div>
+    <div class="card-tags">
+      <span class="tag pink">Python</span><span class="tag pink">Playwright</span><span class="tag">自动化</span>
+    </div>
+  </a>
+
+</div>
+
+<!-- Tools & Automation -->
+<h2 class="section-title" data-section="tools">工具 &amp; 自动化</h2>
+<div class="grid" data-section="tools">
+
+  <a class="card" data-cat="tools" href="https://github.com/sherconan/meal-card-mcp" target="_blank" style="--card-gradient:linear-gradient(90deg,#fccb90,#d57eeb)">
+    <div class="card-icon">🍴</div>
+    <div class="card-title">餐补查询 MCP</div>
+    <div class="card-desc">Claude Desktop MCP Server。支持 246 家餐厅信息查询、83 个菜品价格浏览、智能推荐和餐补额度管理。</div>
+    <div class="card-tags">
+      <span class="tag gold">MCP</span><span class="tag">Python</span><span class="tag blue">Claude Desktop</span>
+    </div>
+  </a>
+
+  <a class="card" data-cat="tools" style="--card-gradient:linear-gradient(90deg,#a18cd1,#fbc2eb)">
+    <div class="card-icon">🧠</div>
+    <div class="card-title">OpenClaw Skills (28+)</div>
+    <div class="card-desc">自建 AI Agent 技能库：股票分析、小红书自动化、微信公众号监控、飞书文档、Cubox 自动分类等 28+ 技能。</div>
+    <div class="card-tags">
+      <span class="tag">OpenClaw</span><span class="tag green">28+ Skills</span><span class="tag">Multi-channel</span>
+    </div>
+  </a>
+
+  <a class="card" data-cat="tools" href="https://github.com/sherconan/meal-allowance-api" target="_blank" style="--card-gradient:linear-gradient(90deg,#4facfe,#43e97b)">
+    <div class="card-icon">💳</div>
+    <div class="card-title">Meal Allowance API</div>
+    <div class="card-desc">餐补余额查询 API，Vercel 部署，提供 RESTful 接口查询餐厅和菜品信息。</div>
+    <div class="card-tags">
+      <span class="tag blue">Vercel</span><span class="tag blue">API</span><span class="tag">Python</span>
+    </div>
+  </a>
+
+</div>
+
+<!-- Data Scrapers -->
+<h2 class="section-title" data-section="scraper">数据采集</h2>
+<div class="grid" data-section="scraper">
+
+  <a class="card" data-cat="scraper" href="https://github.com/sherconan/dianping-scraper" target="_blank" style="--card-gradient:linear-gradient(90deg,#fa709a,#fee140)">
+    <div class="card-icon">🕷️</div>
+    <div class="card-title">大众点评爬虫</div>
+    <div class="card-desc">基于 Playwright 的大众点评商户信息爬虫，支持抓取推荐菜、价格和商户详情。</div>
+    <div class="card-tags">
+      <span class="tag pink">Playwright</span><span class="tag">Python</span><span class="tag gold">Pandas</span>
+    </div>
+  </a>
+
+  <a class="card" data-cat="scraper" href="https://github.com/sherconan/meituan-crawler" target="_blank" style="--card-gradient:linear-gradient(90deg,#f5576c,#ff9a9e)">
+    <div class="card-icon">🛵</div>
+    <div class="card-title">美团爬虫</div>
+    <div class="card-desc">美团/点评菜单价格爬虫，支持批量 URL 输入和 JSONL 输出。</div>
+    <div class="card-tags">
+      <span class="tag pink">Playwright</span><span class="tag">Python</span><span class="tag gold">Pandas</span>
+    </div>
+  </a>
+
+</div>
+
+<!-- Interactive Demos -->
+<h2 class="section-title" data-section="demo">互动 Demo</h2>
+<div class="grid" data-section="demo">
+
+  <a class="card" data-cat="demo" href="https://github.com/sherconan/claude-showcase" target="_blank" style="--card-gradient:linear-gradient(90deg,#667eea,#764ba2)">
+    <div class="card-icon">🌌</div>
+    <div class="card-title">Claude Showcase</div>
+    <div class="card-desc">8 个 Claude 生成的互动 Demo：星系模拟、分形探索器、物理引擎、神经网络可视化、音乐合成器等。另含 5 个 Lenovo 时期 AI 应用原型。</div>
+    <div class="card-tags">
+      <span class="tag">HTML5 Canvas</span><span class="tag">WebAudio</span><span class="tag green">Interactive</span>
+    </div>
+  </a>
+
+  <a class="card" data-cat="demo" href="https://github.com/sherconan/ai-projects-hub" target="_blank" style="--card-gradient:linear-gradient(90deg,#43e97b,#38f9d7)">
+    <div class="card-icon">🏠</div>
+    <div class="card-title">AI 项目管理中心</div>
+    <div class="card-desc">早期项目的统一入口和管理中心，包含小金助手、九章智启、餐补查询等多个子项目。</div>
+    <div class="card-tags">
+      <span class="tag green">HTML</span><span class="tag">Vercel</span><span class="tag blue">MCP</span>
+    </div>
+  </a>
+
+</div>
+
+<footer>
+  <p>Built with AI &amp; passion &nbsp;|&nbsp; <a href="https://github.com/sherconan" target="_blank">GitHub @sherconan</a></p>
+  <p style="margin-top:8px;font-size:.75rem;color:#444">Last updated: 2026-03</p>
+</footer>
+
+<script>
+// Starfield
+!function(){const s=document.getElementById('stars'),n=80;
+for(let i=0;i<n;i++){const d=document.createElement('div');d.className='star';
+const sz=Math.random()*2+.5;d.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-delay:${Math.random()*4}s;opacity:${Math.random()*.5+.1}`;
+s.appendChild(d)}}();
+
+// Filter
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f=btn.dataset.filter;
+    document.querySelectorAll('.card').forEach(c=>{
+      c.classList.toggle('hidden',f!=='all'&&c.dataset.cat!==f);
+    });
+    document.querySelectorAll('.section-title').forEach(s=>{
+      s.style.display=(f==='all'||s.dataset.section===f)?'':'none';
+    });
+    document.querySelectorAll('.grid[data-section]').forEach(g=>{
+      g.style.display=(f==='all'||g.dataset.section===f)?'':'none';
+    });
+  });
+});
+
+// Stagger animation
+document.querySelectorAll('.card').forEach((c,i)=>{c.style.animationDelay=`${i*.06}s`});
+</script>
+</body>
+</html>
