@@ -4,17 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sherconan - AI Developer Portfolio</title>
+<meta name="description" content="AI Developer & Builder — 构建 AI 驱动的金融分析、知识管理和自动化工具">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>S</text></svg>">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --bg:#0b0d17;--surface:#12152a;--border:rgba(255,255,255,.06);
   --text:#e0e0e8;--muted:#6b7294;--accent:#7c6cf0;--accent2:#f06292;
-  --gold:#d4a853;--green:#4caf8a;--blue:#4fa8f5;
+  --gold:#d4a853;--green:#4caf8a;--blue:#4fa8f5;--red:#e74c3c;
 }
 @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 @keyframes gradientFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 
 body{
   background:var(--bg);color:var(--text);
@@ -32,11 +35,17 @@ header{
   padding:80px 20px 50px;
 }
 .avatar{
-  width:100px;height:100px;border-radius:50%;
+  width:110px;height:110px;border-radius:50%;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   display:flex;align-items:center;justify-content:center;
-  margin:0 auto 24px;font-size:2.5rem;
+  margin:0 auto 24px;font-size:2.8rem;
   box-shadow:0 0 40px rgba(124,108,240,.3);
+  position:relative;
+}
+.avatar::after{
+  content:'';position:absolute;inset:-4px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2),var(--blue));
+  z-index:-1;filter:blur(12px);opacity:.5;
 }
 header h1{
   font-size:clamp(2rem,5vw,3.5rem);font-weight:800;
@@ -56,6 +65,18 @@ header .tagline{
 }
 .stat-num{font-size:2.2rem;font-weight:700;color:var(--accent)}
 .stat-label{font-size:.8rem;color:var(--muted);margin-top:4px;letter-spacing:1px;text-transform:uppercase}
+
+/* Tech stack pills */
+.tech-stack{
+  position:relative;z-index:1;
+  display:flex;justify-content:center;gap:8px;flex-wrap:wrap;
+  max-width:700px;margin:28px auto 0;padding:0 20px;
+}
+.tech-pill{
+  font-size:.72rem;padding:4px 12px;border-radius:14px;
+  border:1px solid var(--border);color:var(--muted);
+  background:rgba(124,108,240,.04);letter-spacing:.3px;
+}
 
 /* Filter */
 .filter-bar{
@@ -111,6 +132,7 @@ header .tagline{
 .tag.gold{background:rgba(212,168,83,.12);color:var(--gold)}
 .tag.blue{background:rgba(79,168,245,.12);color:var(--blue)}
 .tag.pink{background:rgba(240,98,146,.12);color:var(--accent2)}
+.tag.red{background:rgba(231,76,60,.12);color:var(--red)}
 .card-links{
   display:flex;gap:12px;margin-top:14px;
 }
@@ -119,6 +141,16 @@ header .tagline{
   display:flex;align-items:center;gap:4px;transition:color .2s;
 }
 .card-link:hover{color:#fff}
+
+/* Featured badge */
+.featured{position:relative}
+.featured::after{
+  content:'FEATURED';position:absolute;top:14px;right:14px;
+  font-size:.6rem;font-weight:700;letter-spacing:1.5px;
+  padding:3px 8px;border-radius:6px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;
+}
 
 /* Section headers */
 .section-title{
@@ -140,6 +172,7 @@ footer{
 }
 footer a{color:var(--accent);text-decoration:none}
 footer a:hover{color:#fff}
+.footer-links{display:flex;justify-content:center;gap:20px;margin-bottom:12px}
 
 /* Responsive */
 @media(max-width:720px){
@@ -159,11 +192,26 @@ footer a:hover{color:#fff}
 <header>
   <div class="avatar">S</div>
   <h1>Sherconan</h1>
-  <p class="tagline">AI Developer &amp; Builder — 构建 AI 驱动的金融分析、知识管理和自动化工具</p>
+  <p class="tagline">AI Developer &amp; Builder — 构建 AI 驱动的金融分析、量化交易和自动化工具</p>
   <div class="stats">
-    <div><div class="stat-num">10+</div><div class="stat-label">Projects</div></div>
-    <div><div class="stat-num">155+</div><div class="stat-label">AI Articles</div></div>
+    <div><div class="stat-num">14</div><div class="stat-label">Public Repos</div></div>
+    <div><div class="stat-num">180+</div><div class="stat-label">AI Articles</div></div>
+    <div><div class="stat-num">4.8K+</div><div class="stat-label">Lines of C++</div></div>
     <div><div class="stat-num">28+</div><div class="stat-label">AI Skills</div></div>
+  </div>
+  <div class="tech-stack">
+    <span class="tech-pill">Python</span>
+    <span class="tech-pill">C++20</span>
+    <span class="tech-pill">React</span>
+    <span class="tech-pill">TypeScript</span>
+    <span class="tech-pill">Flask</span>
+    <span class="tech-pill">Claude API</span>
+    <span class="tech-pill">LangGraph</span>
+    <span class="tech-pill">MCP</span>
+    <span class="tech-pill">Playwright</span>
+    <span class="tech-pill">VitePress</span>
+    <span class="tech-pill">yfinance</span>
+    <span class="tech-pill">FRED API</span>
   </div>
 </header>
 
@@ -180,12 +228,21 @@ footer a:hover{color:#fff}
 <h2 class="section-title" data-section="finance">金融 &amp; 交易</h2>
 <div class="grid" data-section="finance">
 
-  <a class="card" data-cat="finance" href="https://github.com/sherconan/stock-pulse" target="_blank" style="--card-gradient:linear-gradient(90deg,#910E0E,#be8c4b)">
+  <a class="card featured" data-cat="finance" href="https://github.com/sherconan/stock-pulse" target="_blank" style="--card-gradient:linear-gradient(90deg,#910E0E,#be8c4b)">
     <div class="card-icon">📈</div>
     <div class="card-title">StockPulse</div>
-    <div class="card-desc">事件驱动的市场解析平台。大事件 → 传导链 → 行业影响 → 个股波动。实时/晨报/预测三种模式，AI 聚类新闻为大事件。</div>
+    <div class="card-desc">AI 事件驱动市场解析平台。大事件 → 传导链 → 行业影响 → 个股波动。实时监控、晨报生成、预测分析三种模式，集成 Polymarket 预测市场数据。</div>
     <div class="card-tags">
-      <span class="tag gold">Flask</span><span class="tag gold">SocketIO</span><span class="tag">Claude API</span><span class="tag blue">yfinance</span>
+      <span class="tag gold">Flask</span><span class="tag gold">SocketIO</span><span class="tag">Claude API</span><span class="tag blue">yfinance</span><span class="tag green">Polymarket</span>
+    </div>
+  </a>
+
+  <a class="card featured" data-cat="finance" href="https://github.com/sherconan/options-trading-system" target="_blank" style="--card-gradient:linear-gradient(90deg,#e74c3c,#c0392b)">
+    <div class="card-icon">⚡</div>
+    <div class="card-title">Options Trading System</div>
+    <div class="card-desc">C++20 高性能期权交易系统。Black-Scholes 定价引擎、波动率曲面建模、做市策略。无锁环形缓冲区、内存池、CPU 亲和性绑定等超低延迟基础设施。</div>
+    <div class="card-tags">
+      <span class="tag red">C++20</span><span class="tag red">CMake</span><span class="tag gold">Black-Scholes</span><span class="tag">CTP Gateway</span><span class="tag blue">4.8K LOC</span>
     </div>
   </a>
 
@@ -198,12 +255,12 @@ footer a:hover{color:#fff}
     </div>
   </a>
 
-  <a class="card" data-cat="finance" style="--card-gradient:linear-gradient(90deg,#4facfe,#00f2fe)">
+  <a class="card" data-cat="finance" href="https://github.com/sherconan/macro-gear-dashboard" target="_blank" style="--card-gradient:linear-gradient(90deg,#4facfe,#00f2fe)">
     <div class="card-icon">📊</div>
-    <div class="card-title">Futu 量化交易</div>
-    <div class="card-desc">基于富途 OpenAPI 的量化交易系统。覆盖港股、美股、A股，计划与 StockPulse 集成实现事件驱动交易信号。</div>
+    <div class="card-title">Macro Gear Dashboard</div>
+    <div class="card-desc">宏观经济传导仪表盘。国家/行业/微观三层齿轮联动模型，9 种预设情景分析，实时接入 FRED 和汇率数据。</div>
     <div class="card-tags">
-      <span class="tag blue">Futu OpenAPI</span><span class="tag blue">moomoo SDK</span><span class="tag">量化交易</span>
+      <span class="tag blue">React</span><span class="tag blue">TypeScript</span><span class="tag">Zustand</span><span class="tag green">FRED API</span>
     </div>
   </a>
 
@@ -213,12 +270,12 @@ footer a:hover{color:#fff}
 <h2 class="section-title" data-section="knowledge">知识 &amp; 研究</h2>
 <div class="grid" data-section="knowledge">
 
-  <a class="card" data-cat="knowledge" href="https://sherconan.github.io/ai-frontiers-cn/" target="_blank" style="--card-gradient:linear-gradient(90deg,#667eea,#764ba2)">
+  <a class="card featured" data-cat="knowledge" href="https://sherconan.github.io/ai-frontiers-cn/" target="_blank" style="--card-gradient:linear-gradient(90deg,#667eea,#764ba2)">
     <div class="card-icon">📚</div>
     <div class="card-title">AI 前沿精读</div>
-    <div class="card-desc">全球 AI 实验室博客的中文翻译与深度解读。155+ 篇文章，覆盖 Anthropic、OpenAI、DeepMind 等 14 家公司，双层解读体系。</div>
+    <div class="card-desc">全球 AI 实验室博客的中文翻译与深度解读。180+ 篇文章，覆盖 Anthropic、OpenAI、DeepMind 等 14 家公司。入门 + 技术双层解读体系，支持时间线和主题浏览。</div>
     <div class="card-tags">
-      <span class="tag">VitePress</span><span class="tag">Mermaid</span><span class="tag pink">155+ 文章</span><span class="tag">GitHub Pages</span>
+      <span class="tag">VitePress</span><span class="tag">Mermaid</span><span class="tag pink">180+ 文章</span><span class="tag">GitHub Pages</span>
     </div>
     <div class="card-links">
       <span class="card-link">🌐 在线阅读</span>
@@ -229,9 +286,9 @@ footer a:hover{color:#fff}
   <a class="card" data-cat="knowledge" href="https://github.com/sherconan/weekly-report-toolkit" target="_blank" style="--card-gradient:linear-gradient(90deg,#f093fb,#f5576c)">
     <div class="card-icon">📋</div>
     <div class="card-title">行业周报工具包</div>
-    <div class="card-desc">一键生成行业周报：数据采集 → 报告构建 → 质量评估 → HTML/PDF 导出。已用于床垫、AI、宠物医疗等行业。</div>
+    <div class="card-desc">一键生成行业周报：数据采集 → 报告构建 → 质量评估 → HTML/PDF 导出。已覆盖床垫、AI、宠物医疗、冷冻食品等行业。</div>
     <div class="card-tags">
-      <span class="tag pink">Python</span><span class="tag pink">Playwright</span><span class="tag">自动化</span>
+      <span class="tag pink">Python</span><span class="tag pink">Playwright</span><span class="tag">自动化</span><span class="tag gold">PDF</span>
     </div>
   </a>
 
@@ -253,16 +310,16 @@ footer a:hover{color:#fff}
   <a class="card" data-cat="tools" style="--card-gradient:linear-gradient(90deg,#a18cd1,#fbc2eb)">
     <div class="card-icon">🧠</div>
     <div class="card-title">OpenClaw Skills (28+)</div>
-    <div class="card-desc">自建 AI Agent 技能库：股票分析、小红书自动化、微信公众号监控、飞书文档、Cubox 自动分类等 28+ 技能。</div>
+    <div class="card-desc">自建 AI Agent 技能库：股票分析、小红书自动化、微信公众号监控、飞书文档、Cubox 自动分类等 28+ 技能，含高风险技能沙箱隔离框架。</div>
     <div class="card-tags">
-      <span class="tag">OpenClaw</span><span class="tag green">28+ Skills</span><span class="tag">Multi-channel</span>
+      <span class="tag">OpenClaw</span><span class="tag green">28+ Skills</span><span class="tag">Sandbox</span>
     </div>
   </a>
 
   <a class="card" data-cat="tools" href="https://github.com/sherconan/meal-allowance-api" target="_blank" style="--card-gradient:linear-gradient(90deg,#4facfe,#43e97b)">
     <div class="card-icon">💳</div>
     <div class="card-title">Meal Allowance API</div>
-    <div class="card-desc">餐补余额查询 API，Vercel 部署，提供 RESTful 接口查询餐厅和菜品信息。</div>
+    <div class="card-desc">餐补余额查询 RESTful API，Vercel Serverless 部署，供各端集成调用。</div>
     <div class="card-tags">
       <span class="tag blue">Vercel</span><span class="tag blue">API</span><span class="tag">Python</span>
     </div>
@@ -277,7 +334,7 @@ footer a:hover{color:#fff}
   <a class="card" data-cat="scraper" href="https://github.com/sherconan/dianping-scraper" target="_blank" style="--card-gradient:linear-gradient(90deg,#fa709a,#fee140)">
     <div class="card-icon">🕷️</div>
     <div class="card-title">大众点评爬虫</div>
-    <div class="card-desc">基于 Playwright 的大众点评商户信息爬虫，支持抓取推荐菜、价格和商户详情。</div>
+    <div class="card-desc">基于 Playwright 的大众点评商户信息爬虫。支持推荐菜、价格、商户详情抓取，持久化登录态，CSV 输出。</div>
     <div class="card-tags">
       <span class="tag pink">Playwright</span><span class="tag">Python</span><span class="tag gold">Pandas</span>
     </div>
@@ -286,7 +343,7 @@ footer a:hover{color:#fff}
   <a class="card" data-cat="scraper" href="https://github.com/sherconan/meituan-crawler" target="_blank" style="--card-gradient:linear-gradient(90deg,#f5576c,#ff9a9e)">
     <div class="card-icon">🛵</div>
     <div class="card-title">美团爬虫</div>
-    <div class="card-desc">美团/点评菜单价格爬虫，支持批量 URL 输入和 JSONL 输出。</div>
+    <div class="card-desc">美团/点评菜单价格爬虫。支持批量 URL、JSONL/CSV 输出，robots.txt 合规检查。</div>
     <div class="card-tags">
       <span class="tag pink">Playwright</span><span class="tag">Python</span><span class="tag gold">Pandas</span>
     </div>
@@ -323,8 +380,13 @@ footer a:hover{color:#fff}
 </div>
 
 <footer>
-  <p>Built with AI &amp; passion &nbsp;|&nbsp; <a href="https://github.com/sherconan" target="_blank">GitHub @sherconan</a></p>
-  <p style="margin-top:8px;font-size:.75rem;color:#444">Last updated: 2026-03</p>
+  <div class="footer-links">
+    <a href="https://github.com/sherconan" target="_blank">GitHub</a>
+    <a href="https://sherconan.github.io/ai-frontiers-cn/" target="_blank">AI 前沿精读</a>
+    <a href="https://sherconan.github.io/claude-showcase/" target="_blank">Demo 体验</a>
+  </div>
+  <p>Built with AI &amp; passion</p>
+  <p style="margin-top:8px;font-size:.75rem;color:#444">Last updated: 2026-03-23</p>
 </footer>
 
 <script>
@@ -353,7 +415,7 @@ document.querySelectorAll('.filter-btn').forEach(btn=>{
 });
 
 // Stagger animation
-document.querySelectorAll('.card').forEach((c,i)=>{c.style.animationDelay=`${i*.06}s`});
+document.querySelectorAll('.card').forEach((c,i)=>{c.style.animationDelay=`${i*.08}s`});
 </script>
 </body>
 </html>
